@@ -75,9 +75,22 @@ const imagesHTML = images.map(image =>
   </a></li>`).join('');
 gallery.insertAdjacentHTML('beforeend', imagesHTML);
 
-gallery.addEventListener('click', (event) => {
-    event.preventDefault(event.target)
-    console.log(event.target.getAttribute('data-source'))}
-)
+gallery.addEventListener('click', handleClick);
+
+function handleClick(event) {
+  if (event.target === event.currentTarget) {
+    return;
+  }
+  event.preventDefault(event.target)
+  console.log(event.target.getAttribute('data-source'));
+  const instance = basicLightbox.create(`
+  <div class='modal'>
+  <img src=${event.target.getAttribute('data-source')} alt='${event.target.getAttribute('alt')} width='1112' height='640'/>
+  </div>
+  `)
+  instance.show()
+}
+
+
 
 
